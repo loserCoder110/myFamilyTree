@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+       default-lazy-init="true">
+
+    
+    <!-- 扫描bean -->
+    <context:component-scan base-package="com.ldw.familyTree" />
+    
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+         <property name="driverClassName" value="${driver}" />
+         <property name="url" value="${url}" />
+         <property name="username" value="${username}" />
+         <property name="password" value="${password}" />
+         <property name="initialSize" value="${initialSize}" />
+         <property name="maxActive" value="${maxActive}" />
+         <property name="maxIdle" value="${maxIdle}" />
+         <property name="minIdle" value="${minIdle}" />
+         <property name="maxWait" value="${maxWait}" /> 
+    </bean>
+    
+    <!-- 读取jdbc文件 -->
+    <bean id="propertyConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+         <property name="location" value="classpath:jdbc.properties"></property>
+    </bean>
+    
+    <!-- spring和MyBatis的整合 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+           <!-- ref属性指向数据源 -->
+          <property name="dataSource" ref="dataSource"></property>
+          
+          <!-- 自动扫描mapping.xml文件 -->
+          <property name="mapperLocations" value="classpath:mapping/**/*.xml"></property>
+    </bean>
+    
+    <!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+          扫描包的地址 
+          <property name="basePackage" value="com.ldw.familyTree.test.Dao"></property>
+          
+           匹配mapping文件 
+          <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>        
+    </bean>
+     -->
+    <!-- 扫描Dao接口 -->
+    
+    
+    
+    
+<!--     扫描以@MyBatisDao注解的接口 -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="com.ldw.familyTree"/>
+        <property name="annotationClass" value="com.ldw.familyTree.persistence.annotation.MybatisDao"/>
+    </bean> 
+      
+</beans>    
