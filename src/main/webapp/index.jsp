@@ -39,7 +39,7 @@
 						</form>
 						<div>
 						 <span> 尚未注册账号？请<a href="/user/register.do" style="color:red">注册</a> </span>
-						 <span> 练习文件的上传，请点击<a href="/user/toUploadPic">图片上传1234</a></span>
+						<br> <span> 练习文件的上传，请点击<a href="/user/toUploadPic" style="color:red">图片上传1234</a></span>
 						 
 						</div>
 					</div>

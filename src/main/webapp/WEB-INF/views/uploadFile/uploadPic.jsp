@@ -16,6 +16,17 @@
   <input type="submit" value="提交"/>
 </form>
 
+<h1>使用smartupload上传</h1>
+<form action="/upload/smartUploadFile" method="post" enctype="multipart/form-data">
+   上传文件1：<input type="file" name="myfile1"><br>
+   <br>
+   上传文件2：<input type="file" name="myfile2"><br>
+   <br>
+   上传文件3：<input type="file" name="myfile3">
+<input type="submit" value="SUBMIT">
+
+</form>
+${result} 
 </body>
 
 <script type="text/javascript">
