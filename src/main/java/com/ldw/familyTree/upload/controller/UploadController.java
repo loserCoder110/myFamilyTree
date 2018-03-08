@@ -21,6 +21,24 @@ import com.jspsmart.upload.SmartUpload;
 @RequestMapping("/upload")
 public class UploadController  implements ServletConfigAware,ServletContextAware{
 	
+	/**
+	 * 使用smartupload时需要用到servletConfig，这在使用servlet时非常容易获取，
+	 * 但在Controller中要这样获取
+	 * */
+	private ServletContext servletContext;
+	
+	public void setServletContext(ServletContext arg0) {
+		this.servletContext = arg0;
+		
+	}
+    
+	private ServletConfig servletConfig;
+	public void setServletConfig(ServletConfig arg0) {
+		this.servletConfig = arg0;
+		
+	}
+
+	//controller开始
 	@RequestMapping("/pictures")
 	public void uploadPic(HttpServletRequest request) throws IOException{
 		System.out.println("进入上传");
@@ -54,7 +72,7 @@ public class UploadController  implements ServletConfigAware,ServletContextAware
 	
 	//使用smartupload做文件的上传
 	@RequestMapping("/smartUploadFile")
-	public void smartUploadFile(ServletConfig config,HttpServletRequest request,HttpServletResponse response) throws ServletException {
+	public void smartUploadFile(HttpServletRequest request,HttpServletResponse response) throws ServletException {
 		
 		//设置上传文件的保存路径
 		String saveFilePath = "D:/smartupload";
@@ -65,7 +83,7 @@ public class UploadController  implements ServletConfigAware,ServletContextAware
 		
 		SmartUpload smartUpload = new SmartUpload();
 		//初始化对象
-		smartUpload.initialize(config, request, response);
+		smartUpload.initialize(servletConfig, request, response);
 		
 		//设置上传文件大小
 		smartUpload.setMaxFileSize(1024*1024*10);
@@ -96,15 +114,7 @@ public class UploadController  implements ServletConfigAware,ServletContextAware
 		
 	}
 
-	public void setServletContext(ServletContext arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setServletConfig(ServletConfig arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 
 }

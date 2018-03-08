@@ -38,6 +38,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/ChromeDownload/jspsmartupload.jar"/>
+	<classpathentry kind="lib" path="D:/ChromeDownload/jspsmartupload.jar" sourcepath="src/main/webapp/WEB-INF/lib/jspsmartupload.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

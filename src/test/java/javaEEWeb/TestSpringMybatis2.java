@@ -16,7 +16,7 @@ public class TestSpringMybatis2 {
 	@Test
 	public void test1(){
 		ApplicationContext ac = new ClassPathXmlApplicationContext("spring-mybatis.xml");
-		testCaseService tcs = (testCaseService)ac.getBean("testCaseService");
+		testCaseService tcs = (testCaseService)ac.getBean("testCaseService123");
 		System.out.println(tcs.getTestCaseById(2).getName());
 	}
 	
