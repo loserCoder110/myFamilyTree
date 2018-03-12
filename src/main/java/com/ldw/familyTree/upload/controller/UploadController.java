@@ -4,18 +4,26 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.context.ServletContextAware;
 
 import com.jspsmart.upload.SmartUpload;
+import com.sun.mail.imap.protocol.Item;
 
 @Controller("uploadController")
 @RequestMapping("/upload")
@@ -108,13 +116,63 @@ public class UploadController  implements ServletConfigAware,ServletContextAware
 					
 		} catch (Exception e) {
 			result="failed";
+			if(e.getMessage().indexOf("1015")!=-1){
+				result = "上传失败：上传文件类型不正确！";
+			}else if (e.getMessage().indexOf("1010")!=-1) {
+				result = "上传失败：上传文件类型不正确！";
+			}else if (e.getMessage().indexOf("1105")!=-1) {
+				result = "上传失败：上传文件大小大于允许的最大值！";
+			}else if (e.getMessage().indexOf("1110")!=-1) {
+				result = "上传失败：上传文件总大小大于允许的最大值！";
+			}
 			e.printStackTrace();
 		}
 		request.setAttribute("result", result);
 		
 	}
 
-	
+	//使用fileupload上传文件
+	@RequestMapping("/fileUpload")
+	public String fileUpload(HttpServletRequest request,HttpServletResponse response){
+		
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		
+		upload.setFileSizeMax(3*1024*1024);
+		
+		upload.setSizeMax(5*1024*1024);
+		
+		if(ServletFileUpload.isMultipartContent(request)){
+			try {
+				List<FileItem> list = upload.parseRequest(request);
+				for (FileItem fileItem : list) {
+					String name = fileItem.getName();
+					System.out.println("上传文件名:"+name);
+					String id = UUID.randomUUID().toString();
+					
+					name = id+name;
+					System.out.println("随机生成的文件名："+name);
+					
+					String mockServer = "D:/fileUpload";
+					File file = new File(mockServer); 
+					if(!file.exists()){
+						file.mkdirs();  	
+					}
+					File file2 = new File(mockServer+File.separator+name);
+					fileItem.write(file2);
+					fileItem.delete();
+				}
+			} catch (FileUploadException e) {
+				
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return null;
+	}
 	
 
 }

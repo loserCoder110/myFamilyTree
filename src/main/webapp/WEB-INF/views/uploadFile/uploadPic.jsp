@@ -27,6 +27,12 @@
 
 </form>
 ${result} 
+
+<h1>使用fileupload上传文件</h1>
+<form action="/upload/fileUpload" method="post" enctype="multipart/form-data">
+上传文件1：<input type="file" name="file1"><br>
+<input type="submit" value="提交">
+</form>
 </body>
 
 <script type="text/javascript">
