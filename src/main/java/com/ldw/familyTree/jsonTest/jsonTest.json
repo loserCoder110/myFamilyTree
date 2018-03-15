@@ -1,0 +1,9 @@
+{
+"name":"赵敏",
+"sex":"female",
+"age":22,
+"skills":["做饭","功夫"],
+"marital_status":"married",
+"the_third_one":false,
+"baby":null
+}

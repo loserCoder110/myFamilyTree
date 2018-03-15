@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bookStore>
+	<book id="1">
+		<name>倚天屠龙记</name>
+		<author>金庸</author>
+		<year>1998</year>
+		<price>101</price>
+	</book>
+	<book id="2">
+		<name>流星蝴蝶剑</name>
+		<author>古龙</author>
+		<year>1983</year>
+		<price>99</price>
+		<language>Chinese</language>
+	</book>
+</bookStore>
